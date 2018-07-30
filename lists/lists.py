@@ -76,29 +76,28 @@ class SinglyLinkedList():
         return "[" + ",".join(l) + "]"
 
 class DoublyLinkedList():
-    # todo make this doubly linked.
     def __init__(self):
         self.head = DoublyLinkedNode()
         self.size = 0
 
     def push_front(self, data):
-    # todo make this doubly linked.
         old_head = self.head
         new_head = DoublyLinkedNode(data)
         new_head.next = old_head
+        new_head.prev = old_head.prev
+        old_head.prev = new_head
         self.head = new_head
         self.size += 1
 
     def push_back(self, data):
-    # todo make this doubly linked.
-        current = self.head
-        while current.next != None:
-            current = current.next
-        current.next = DoublyLinkedNode(data)
+        back = self.head.prev
+        new_back = DoublyLinkedNode(data)
+        back.next = new_back
+        new_back.prev = back
+        self.head.prev = new_back
         self.size += 1
 
     def insert_before(self, index, data):
-    # todo make this doubly linked.
         if self.size < index:
             return -1
         current = self.head
@@ -106,18 +105,23 @@ class DoublyLinkedList():
             current = current.next
         newNode = DoublyLinkedList(data)
         newNode.next = current.next
+        current.next.prev = newNode
+        newNode.prev = current
         current.next = newNode
+        self.size += 1
 
     def insert_after(self, index, data):
-    # todo make this doubly linked.
         if self.size < index:
             return -1
         current = self.head
         for i in range(index):
             current = current.next
         newNode = DoublyLinkedList(data)
+        newNode.prev = current
         newNode.next = current.next
+        current.next.prev = newNode
         current.next = newNode
+        self.size += 1
 
     def remove(self, data):
     # todo make this doubly linked.
