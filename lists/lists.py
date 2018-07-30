@@ -78,9 +78,14 @@ class SinglyLinkedList():
 class DoublyLinkedList():
     def __init__(self):
         self.head = DoublyLinkedNode()
+        self.head.next = self.head
+        self.head.prev = self.head
         self.size = 0
 
     def push_front(self, data):
+        if self.head.data == None:
+            self.head.data = data
+            return
         old_head = self.head
         new_head = DoublyLinkedNode(data)
         new_head.next = old_head
@@ -90,11 +95,14 @@ class DoublyLinkedList():
         self.size += 1
 
     def push_back(self, data):
+        if self.head.data == None:
+            self.head.data = data
+            return
         back = self.head.prev
-        new_back = DoublyLinkedNode(data)
-        back.next = new_back
-        new_back.prev = back
-        self.head.prev = new_back
+        newNode = DoublyLinkedNode(data)
+        newNode.prev = back
+        newNode.next = self.head
+        back.next = newNode
         self.size += 1
 
     def insert_before(self, index, data):
@@ -104,10 +112,9 @@ class DoublyLinkedList():
         for i in range(index - 1):
             current = current.next
         newNode = DoublyLinkedList(data)
-        newNode.next = current.next
-        current.next.prev = newNode
-        newNode.prev = current
-        current.next = newNode
+        newNode.prev = current.prev
+        current.prev = newNode
+        newNode.next = current
         self.size += 1
 
     def insert_after(self, index, data):
@@ -117,10 +124,9 @@ class DoublyLinkedList():
         for i in range(index):
             current = current.next
         newNode = DoublyLinkedList(data)
-        newNode.prev = current
-        newNode.next = current.next
-        current.next.prev = newNode
-        current.next = newNode
+        newNode.prev = current.prev
+        current.prev = newNode
+        newNode.next = current
         self.size += 1
 
     def remove(self, data):
@@ -141,9 +147,9 @@ class DoublyLinkedList():
         return num_deleted
                 
     def toString(self):
-        current = self.head
-        l = []
-        while current != None:
+        l = [str(self.head.data)]
+        current = self.head.next
+        while current != self.head:
             l.append(str(current.data))
             current = current.next
         return "[" + ",".join(l) + "]"
