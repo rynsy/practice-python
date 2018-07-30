@@ -37,7 +37,7 @@ class SinglyLinkedList():
         current = self.head
         for i in range(index - 1):
             current = current.next
-        newNode = SinglyLinkedList(data)
+        newNode = SinglyLinkedNode(data)
         newNode.next = current.next
         current.next = newNode
 
@@ -47,7 +47,7 @@ class SinglyLinkedList():
         current = self.head
         for i in range(index):
             current = current.next
-        newNode = SinglyLinkedList(data)
+        newNode = SinglyLinkedNode(data)
         newNode.next = current.next
         current.next = newNode
 
