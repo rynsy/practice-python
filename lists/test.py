@@ -61,6 +61,7 @@ def single_linked_remove_test():
     l.remove(2)
     assert l.toString() == "[0,1,3,4,5,6,7,8,9]"
 
+#Doubly linked tests
 def double_linked_construct_test():
     l = DoublyLinkedList()
     for i in range(10):

@@ -78,55 +78,57 @@ class SinglyLinkedList():
 class DoublyLinkedList():
     def __init__(self):
         self.head = DoublyLinkedNode()
-        self.head.next = self.head
-        self.head.prev = self.head
         self.size = 0
 
     def push_front(self, data):
         if self.head.data == None:
             self.head.data = data
             return
-        old_head = self.head
-        new_head = DoublyLinkedNode(data)
-        new_head.next = old_head
-        new_head.prev = old_head.prev
-        old_head.prev = new_head
-        self.head = new_head
+        head = self.head
+        newNode = DoublyLinkedNode(data)
+        newNode.prev = None
+        newNode.next = head
+        head.prev = newNode
+        self.head = newNode
         self.size += 1
 
     def push_back(self, data):
         if self.head.data == None:
             self.head.data = data
             return
-        back = self.head.prev
+        current = self.head
+        while current.next != None:
+            current = current.next
         newNode = DoublyLinkedNode(data)
-        newNode.prev = back
-        newNode.next = self.head
-        back.next = newNode
+        current.next = newNode
+        newNode.prev = current
+        newNode.next = None
         self.size += 1
 
     def insert_before(self, index, data):
         if self.size < index:
             return -1
         current = self.head
-        for i in range(index - 1):
+        for i in range(index):
             current = current.next
-        newNode = DoublyLinkedList(data)
+        newNode = DoublyLinkedNode(data)
+        current.prev.next = newNode
         newNode.prev = current.prev
-        current.prev = newNode
         newNode.next = current
+        current.prev = newNode
         self.size += 1
 
     def insert_after(self, index, data):
         if self.size < index:
             return -1
         current = self.head
-        for i in range(index):
+        for i in range(index+1):
             current = current.next
-        newNode = DoublyLinkedList(data)
+        newNode = DoublyLinkedNode(data)
+        current.prev.next = newNode
         newNode.prev = current.prev
-        current.prev = newNode
         newNode.next = current
+        current.prev = newNode
         self.size += 1
 
     def remove(self, data):
@@ -149,7 +151,7 @@ class DoublyLinkedList():
     def toString(self):
         l = [str(self.head.data)]
         current = self.head.next
-        while current != self.head:
+        while current != None:
             l.append(str(current.data))
             current = current.next
         return "[" + ",".join(l) + "]"
