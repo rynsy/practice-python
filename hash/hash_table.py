@@ -3,6 +3,8 @@
     to get the ChainedTable to work kind of like a dictionary but the type system in Python is very frustrating.
 
     Putting this down for now.
+
+    TODO: look into static typing in Python
 """
 import math
 import random as r
