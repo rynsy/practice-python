@@ -67,7 +67,7 @@ class SinglyLinkedList():
             current = current.next
         return num_deleted
                 
-    def toString(self):
+    def __str__(self):
         current = self.head
         l = []
         while current != None:
@@ -148,7 +148,7 @@ class DoublyLinkedList():
             current = current.next
         return num_deleted
                 
-    def toString(self):
+    def __str__(self):
         l = [str(self.head.data)]
         current = self.head.next
         while current != None:
