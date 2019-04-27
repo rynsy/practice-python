@@ -3,6 +3,14 @@ from itertools import product
 
 def bcd(n):
     """
+        Algorithm taken/adapted from several Gameboy emulators
+        written in Rust. Wrote this to experiment with different
+        assignments for the CPU flags.
+
+        c_flag: carry
+        h_flag: half-carry
+        n_flag: negation
+
         Example:
             Input: 0b0011_0011      // 32 + 16 + 2 + 1 = 51
 
@@ -27,10 +35,14 @@ def bcd(n):
 def test():
     for i in range(0xFF):
         print("i: {}".format(i))
-        for c, h in product([True, False], repeat=2):
-            c_flag, h_flag = c, h 
-            print("\tC_FLAG={},H_FLAG={}:\n\t\tbin(i): {}\tbcd(i): {}".format(
-                c_flag, h_flag, format(i, "#010b"), format(bcd(i), "#010b")))
+        for c, h, n in product([True, False], repeat=3):
+            c_flag, h_flag, n_flag = c, h, n
+            print("\tC_FLAG: {}, H_FLAG: {}, N_FLAG: {}:\n\t\tbin(i): {}\tbcd(i): {}".format(
+                c_flag, h_flag, n_flag, format(i, "#010b"), format(bcd(i), "#010b")))
+            if c_flag == c and h_flag == h and n_flag == n:
+                print("\t\tFlags unchanged")
+            else:
+                print("\t\tFlags modified after call to bcd(): C_FLAG: {}, H_FLAG: {}, N_FLAG".format(c_flag, h_flag, n_flag))
 
 if __name__ == "__main__":
     # Gameboy CPU Flags
